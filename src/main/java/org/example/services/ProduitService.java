@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         for(Produit p : produits){
             System.out.println(p.getMarque());
         }
+        session.close();
     }
 
     public void findWherePriceSupp(double prix){
@@ -69,6 +71,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         for(Produit p : produits){
             System.out.println(p.getMarque());
         }
+        session.close();
     }
 
     public void findWhereBetweenDate(Date dateMin, Date dateMax){
@@ -80,5 +83,30 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         for(Produit p : produits){
             System.out.println(p.getMarque());
         }
+        session.close();
+    }
+
+    @Override
+    public void findWhereStockInferieur(int stock) {
+        session = sessionFactory.openSession();
+        Query<Produit> produitQuery = session.createQuery("SELECT id, reference from Produit as p where p.stock < ?1");
+        produitQuery.setParameter(1,stock);
+        List result = produitQuery.list();
+
+        List<Produit> produitList = new ArrayList<>();
+
+        for (Object o: result) {
+            Object[] res = (Object[]) o;
+            Produit pr = new Produit();
+            pr.setId((int) res[0]);
+            pr.setReference((String) res[1]);
+            produitList.add(pr);
+        }
+
+        for (Produit p :produitList) {
+            System.out.println(p.getId() + " : " + p.getReference());
+        }
+        session.close();
+
     }
 }

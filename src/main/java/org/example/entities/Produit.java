@@ -32,6 +32,14 @@ public class Produit {
         this.prix = prix;
     }
 
+    public Produit(String marque, String reference, Date dateAchat, double prix, int stock) {
+        this.marque = marque;
+        this.reference = reference;
+        this.dateAchat = dateAchat;
+        this.prix = prix;
+        this.stock = stock;
+    }
+
     public int getId() {
         return id;
     }

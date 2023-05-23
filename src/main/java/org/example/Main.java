@@ -4,6 +4,7 @@ import org.example.entities.Produit;
 import org.example.services.ProduitService;
 
 import java.util.Date;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,11 +14,11 @@ public class Main {
 
         // Creation des produits
         ProduitService ps = new ProduitService();
-/*        *//*ps.create(new Produit("TOSHIBA","zzaa123",new Date("2016/01/08"),6000));
-        ps.create(new Produit("HP","EER678",new Date("2016/02/09"),2000));
-        ps.create(new Produit("SONY","AQWZSX",new Date("2016/09/23"),6000));
-        ps.create(new Produit("DELL","AZERTY",new Date("2016/02/12"),6000));
-        ps.create(new Produit("SONY","qsdERT",new Date("2016/02/02"),6000));*//*
+        ps.create(new Produit("TOSHIBA","zzaa123",new Date("2016/01/08"),6000,100));
+        ps.create(new Produit("HP","EER678",new Date("2016/02/09"),2000,150));
+        ps.create(new Produit("SONY","AQWZSX",new Date("2016/09/23"),6000,200));
+        ps.create(new Produit("DELL","AZERTY",new Date("2016/02/12"),6000,300));
+        ps.create(new Produit("SONY","qsdERT",new Date("2016/02/02"),6000,400));
 
         // Informations produit id = 2
 
@@ -36,13 +37,21 @@ public class Main {
             p.setDateAchat(new Date("2015/09/08"));
             p.setPrix(5000);
             ps.update(p);
-        }*/
+        }
 
         //ps.find();
 
         //ps.findWherePriceSupp(5001);
 
         ps.findWhereBetweenDate(new Date("2015/09/08"),new Date("2016/02/03"));
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Entrez une valeur de stock");
+        int stock = sc.nextInt();
+        sc.nextLine();
+
+        ps.findWhereStockInferieur(stock);
+
 
     }
 }
