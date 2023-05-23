@@ -43,9 +43,15 @@ public class Main {
 
         //ps.findWherePriceSupp(5001);
 
-        ps.findWhereBetweenDate(new Date("2015/09/08"),new Date("2016/02/03"));
-
         Scanner sc = new Scanner(System.in);
+        System.out.println("Entrez une première date au format : 2015/09/08");
+        String dateUn = sc.nextLine();
+        System.out.println("Entrez une deuxième date au format : 2015/09/08");
+        String dateDeux = sc.nextLine();
+
+        ps.findWhereBetweenDate(new Date(dateUn),new Date(dateDeux));
+
+
         System.out.println("Entrez une valeur de stock");
         int stock = sc.nextInt();
         sc.nextLine();

@@ -86,6 +86,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         session.close();
     }
 
+
     @Override
     public void findWhereStockInferieur(int stock) {
         session = sessionFactory.openSession();
