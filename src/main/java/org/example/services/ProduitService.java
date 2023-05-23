@@ -53,42 +53,36 @@ public class ProduitService extends BaseService implements Repository<Produit> {
     }
 
     @Override
-    public void find() {
+    public List<Produit> find() {
         session = sessionFactory.openSession();
         Query<Produit> produitQuery = session.createQuery("from Produit");
         List<Produit> produits = produitQuery.list();
-        for(Produit p : produits){
-            System.out.println(p.getMarque());
-        }
         session.close();
+        return produits;
     }
 
-    public void findWherePriceSupp(double prix){
+    public List<Produit> findWherePriceSupp(double prix){
         session = sessionFactory.openSession();
         Query<Produit> produitQuery = session.createQuery("from Produit where prix> ?1");
         produitQuery.setParameter(1,prix);
         List<Produit> produits = produitQuery.list();
-        for(Produit p : produits){
-            System.out.println(p.getMarque());
-        }
         session.close();
+        return produits;
     }
 
-    public void findWhereBetweenDate(Date dateMin, Date dateMax){
+    public List<Produit> findWhereBetweenDate(Date dateMin, Date dateMax){
         session = sessionFactory.openSession();
         Query<Produit> produitQuery = session.createQuery("from Produit where dateAchat BETWEEN ?1 and ?2");
         produitQuery.setParameter(1,dateMin);
         produitQuery.setParameter(2,dateMax);
         List<Produit> produits = produitQuery.list();
-        for(Produit p : produits){
-            System.out.println(p.getMarque());
-        }
         session.close();
+        return produits;
     }
 
 
     @Override
-    public void findWhereStockInferieur(int stock) {
+    public List<Produit> findWhereStockInferieur(int stock) {
         session = sessionFactory.openSession();
         Query<Produit> produitQuery = session.createQuery("SELECT id, reference from Produit as p where p.stock < ?1");
         produitQuery.setParameter(1,stock);
@@ -103,11 +97,35 @@ public class ProduitService extends BaseService implements Repository<Produit> {
             pr.setReference((String) res[1]);
             produitList.add(pr);
         }
-
-        for (Produit p :produitList) {
-            System.out.println(p.getId() + " : " + p.getReference());
-        }
         session.close();
-
+        return produitList;
     }
+
+    @Override
+    public double findPriceByBrand(String brand) {
+        session = sessionFactory.openSession();
+        Query query = session.createQuery("select sum(prix*stock) from Produit where marque = ?1");
+        query.setParameter(1,brand);
+        double price = (double) query.uniqueResult();
+        session.close();
+        return price;
+    }
+
+    public double findAveragePrice() {
+        session = sessionFactory.openSession();
+        Query query = session.createQuery("select avg(prix) from Produit");
+        double avg = (double) query.uniqueResult();
+        session.close();
+        return avg;
+    }
+
+    public List<Produit> findProductByBrand(String brand){
+        session = sessionFactory.openSession();
+        Query<Produit> produitQuery = session.createQuery("from Produit where marque = ?1");
+        produitQuery.setParameter(1,brand);
+        List<Produit> produits = produitQuery.list();
+        session.close();
+        return produits;
+    }
+
 }

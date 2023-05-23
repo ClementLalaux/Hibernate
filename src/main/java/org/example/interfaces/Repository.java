@@ -1,6 +1,9 @@
 package org.example.interfaces;
 
+import org.example.entities.Produit;
+
 import java.util.Date;
+import java.util.List;
 
 public interface Repository<T> {
 
@@ -12,10 +15,16 @@ public interface Repository<T> {
 
     T findById(int id);
 
-     void find();
-    void findWherePriceSupp(double prix);
+    List<T> find();
+    List<T> findWherePriceSupp(double prix);
 
-    void findWhereBetweenDate(Date dateMin, Date dateMax);
+    List<T> findWhereBetweenDate(Date dateMin, Date dateMax);
 
-    void findWhereStockInferieur(int stock);
+    List<T> findWhereStockInferieur(int stock);
+
+    double findPriceByBrand(String brand);
+
+    double findAveragePrice();
+
+    List<T> findProductByBrand(String brand);
 }
