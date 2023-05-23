@@ -55,6 +55,7 @@ public class IHM {
                     findProductByBrandFonction();
                     break;
                 case "12":
+                    deleteByBrand();
                     break;
             }
         }while (!choix.equals("0"));
@@ -180,6 +181,16 @@ public class IHM {
         List<Produit> produits = produitService.findProductByBrand(brand);
         for (Produit p :produits) {
             System.out.println(p.getId() + " : " + p.getReference());
+        }
+    }
+
+    public void deleteByBrand(){
+        System.out.println("Entrez une marque");
+        String brand = scanner.nextLine();
+        if(produitService.deleteByBrand(brand)){
+            System.out.println("La marque " + brand + " et ses produits à été supprimé");
+        } else {
+            System.out.println("Pas marché");
         }
     }
 

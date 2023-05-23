@@ -128,4 +128,19 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         return produits;
     }
 
+    @Override
+    public boolean deleteByBrand(String brand) {
+        session = sessionFactory.openSession();
+        String delete_query = "delete Produit where marque=?1";
+        Query query = session.createQuery(delete_query);
+        query.setParameter(1,brand);
+        session.getTransaction().begin();
+        int success = query.executeUpdate(); // C'est le nombre de ligne affectée par la requete
+        session.getTransaction().commit();
+        if(success>0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

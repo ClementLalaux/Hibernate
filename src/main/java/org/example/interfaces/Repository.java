@@ -27,4 +27,6 @@ public interface Repository<T> {
     double findAveragePrice();
 
     List<T> findProductByBrand(String brand);
+
+    boolean deleteByBrand(String brand);
 }
