@@ -33,4 +33,14 @@ public class Image {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public Produit getProduitUn() {
+        return produitUn;
+    }
+
+    public void setProduitUn(Produit produitUn) {
+        this.produitUn = produitUn;
+    }
+
+
 }

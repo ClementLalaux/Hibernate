@@ -225,10 +225,8 @@ public class IHM {
             Commentaire commentaire = new Commentaire();
             commentaire.setContenu(message);
             commentaire.setNote(note);
-            produit.addCommentaire(commentaire);
+            commentaire.setProduit(produit);
             commentaireService.create(commentaire);
-           // produit.addCommentaire(commentaire);
-            produitService.update(produit);
         }
     }
 
@@ -242,16 +240,16 @@ public class IHM {
             String message = scanner.nextLine();
             Image image = new Image();
             image.setUrl(message);
+            image.setProduitUn(produit);
             imageService.create(image);
-            produit.addImages(image);
-            produitService.update(produit);
         }
     }
 
     public void findProductByCommentNoteFonction(){
-        System.out.println(produitService.findProductByCommentNote());
+        List<Produit> produits = produitService.findProductByCommentNote();
+        for (Produit i :produits) {
+            System.out.println(i);
+        }
     }
-
-
 
 }

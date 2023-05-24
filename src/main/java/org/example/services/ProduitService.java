@@ -143,10 +143,13 @@ public class  ProduitService extends BaseService implements Repository<Produit> 
     }
 
     public List<Produit> findProductByCommentNote(){
+        List<Produit> produits = new ArrayList<>();
         session = sessionFactory.openSession();
-        Query<Produit> produitQuery = session.createQuery("from Produit as p where Commentaire.note > 4 GROUP BY p.reference");
-        List<Produit> produits = produitQuery.list();
-        session.close();
+        Query<Integer> produitQuery = session.createQuery("select DISTINCT produit.id from Commentaire WHERE note>4 ");
+        List<Integer> entiers = produitQuery.list();
+        for (Integer i :entiers) {
+            produits.add(findById(i));
+        }
         return produits;
     }
 }
