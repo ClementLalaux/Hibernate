@@ -225,8 +225,9 @@ public class IHM {
             Commentaire commentaire = new Commentaire();
             commentaire.setContenu(message);
             commentaire.setNote(note);
-            commentaireService.create(commentaire);
             produit.addCommentaire(commentaire);
+            commentaireService.create(commentaire);
+           // produit.addCommentaire(commentaire);
             produitService.update(produit);
         }
     }

@@ -26,7 +26,7 @@ public class Produit {
 
     private int stock;
 
-    @OneToMany(mappedBy = "produit")
+    @OneToMany(mappedBy = "produit",fetch = FetchType.EAGER)
     private List<Commentaire> commentaires = new ArrayList<>();
 
     @OneToMany(mappedBy = "produitUn")
