@@ -10,11 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProduitService extends BaseService implements Repository<Produit> {
+public class  ProduitService extends BaseService implements Repository<Produit> {
 
-    public ProduitService(){
-        super();
-    }
+
 
     @Override
     public boolean create(Produit o) {
@@ -22,6 +20,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         session.beginTransaction();
         session.save(o);
         session.getTransaction().commit();
+        session.close();
         return true;
     }
 
@@ -31,6 +30,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         session.beginTransaction();
         session.update(o);
         session.getTransaction().commit();
+        session.close();
         return true;
     }
 
@@ -81,7 +81,6 @@ public class ProduitService extends BaseService implements Repository<Produit> {
     }
 
 
-    @Override
     public List<Produit> findWhereStockInferieur(int stock) {
         session = sessionFactory.openSession();
         Query<Produit> produitQuery = session.createQuery("SELECT id, reference from Produit as p where p.stock < ?1");
@@ -101,7 +100,6 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         return produitList;
     }
 
-    @Override
     public double findPriceByBrand(String brand) {
         session = sessionFactory.openSession();
         Query query = session.createQuery("select sum(prix*stock) from Produit where marque = ?1");
@@ -128,7 +126,7 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         return produits;
     }
 
-    @Override
+
     public boolean deleteByBrand(String brand) {
         session = sessionFactory.openSession();
         String delete_query = "delete Produit where marque=?1";
@@ -142,5 +140,13 @@ public class ProduitService extends BaseService implements Repository<Produit> {
         } else {
             return false;
         }
+    }
+
+    public List<Produit> findProductByCommentNote(){
+        session = sessionFactory.openSession();
+        Query<Produit> produitQuery = session.createQuery("from Produit as p where Commentaire.note > 4 GROUP BY p.reference");
+        List<Produit> produits = produitQuery.list();
+        session.close();
+        return produits;
     }
 }

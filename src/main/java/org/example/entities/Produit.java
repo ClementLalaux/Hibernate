@@ -1,8 +1,12 @@
 package org.example.entities;
 
 
+import org.example.services.ImageService;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Produit {
@@ -21,6 +25,12 @@ public class Produit {
     private double prix;
 
     private int stock;
+
+    @OneToMany(mappedBy = "produit")
+    private List<Commentaire> commentaires = new ArrayList<>();
+
+    @OneToMany(mappedBy = "produitUn")
+    private List<Image> images = new ArrayList<>();
 
     public Produit() {
     }
@@ -86,6 +96,30 @@ public class Produit {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public List<Commentaire> getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(List<Commentaire> commentaires) {
+        this.commentaires = commentaires;
+    }
+
+    public void addCommentaire(Commentaire commentaire){
+        getCommentaires().add(commentaire);
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public void addImages(Image image){
+        getImages().add(image);
     }
 
     @Override

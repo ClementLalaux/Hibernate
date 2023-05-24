@@ -1,6 +1,10 @@
 package org.example;
 
+import org.example.entities.Commentaire;
+import org.example.entities.Image;
 import org.example.entities.Produit;
+import org.example.services.CommentaireService;
+import org.example.services.ImageService;
 import org.example.services.ProduitService;
 
 import java.util.Date;
@@ -10,6 +14,8 @@ import java.util.Scanner;
 public class IHM {
     Scanner scanner;
     ProduitService produitService = new ProduitService();
+    ImageService imageService = new ImageService();
+    CommentaireService commentaireService = new CommentaireService();
     String choix;
 
     public IHM(){
@@ -57,6 +63,14 @@ public class IHM {
                 case "12":
                     deleteByBrand();
                     break;
+                case "13":
+                    ajouterCommentaireFonction();
+                    break;
+                case "14":
+                    ajouterImageFunction();
+                    break;
+                case "15":
+                    findProductByCommentNoteFonction();
             }
         }while (!choix.equals("0"));
     }
@@ -74,6 +88,9 @@ public class IHM {
         System.out.println("10 - Afficher la valeur moyenne des prix");
         System.out.println("11 - Afficher les produits d'une marque");
         System.out.println("12 - Supprimer les produits d'une marque");
+        System.out.println("13 - Ajouter un commentaire et l'associer a un produit");
+        System.out.println("14 - Ajouter une image et l'associer a un produit");
+        System.out.println("15 - Chercher les produits avec note supérieur a 4");
         System.out.println("0 - EXIT");
     }
 
@@ -193,5 +210,47 @@ public class IHM {
             System.out.println("Pas marché");
         }
     }
+
+    public void ajouterCommentaireFonction(){
+        System.out.println("Entrez l'id du produit à laquelle associer le commentaire");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Produit produit = produitService.findById(id);
+        if(produit != null){
+            System.out.println("Entrez un message");
+            String message = scanner.nextLine();
+            System.out.println("Entrez une note");
+            int note = scanner.nextInt();
+            scanner.nextLine();
+            Commentaire commentaire = new Commentaire();
+            commentaire.setContenu(message);
+            commentaire.setNote(note);
+            commentaireService.create(commentaire);
+            produit.addCommentaire(commentaire);
+            produitService.update(produit);
+        }
+    }
+
+    public void ajouterImageFunction(){
+        System.out.println("Entrez l'id du produit à laquelle associer l'image");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        Produit produit = produitService.findById(id);
+        if(produit != null){
+            System.out.println("Entrez une url");
+            String message = scanner.nextLine();
+            Image image = new Image();
+            image.setUrl(message);
+            imageService.create(image);
+            produit.addImages(image);
+            produitService.update(produit);
+        }
+    }
+
+    public void findProductByCommentNoteFonction(){
+        System.out.println(produitService.findProductByCommentNote());
+    }
+
+
 
 }

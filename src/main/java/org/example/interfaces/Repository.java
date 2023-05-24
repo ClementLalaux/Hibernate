@@ -16,17 +16,5 @@ public interface Repository<T> {
     T findById(int id);
 
     List<T> find();
-    List<T> findWherePriceSupp(double prix);
 
-    List<T> findWhereBetweenDate(Date dateMin, Date dateMax);
-
-    List<T> findWhereStockInferieur(int stock);
-
-    double findPriceByBrand(String brand);
-
-    double findAveragePrice();
-
-    List<T> findProductByBrand(String brand);
-
-    boolean deleteByBrand(String brand);
 }
